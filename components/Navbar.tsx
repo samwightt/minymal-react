@@ -24,6 +24,10 @@ const Navbar: FC<NavbarProps> = ({ settings, seo }) => {
         <title>
           {seo.title ? `${seo.title} | ${settings.title}` : settings.title}
         </title>
+        <meta
+          property="description"
+          content={seo.description || settings.description}
+        />
         <meta property="og:site_name" content={settings.title} />
         <meta property="og:type" content="website" />
         <meta

@@ -38,8 +38,8 @@ export default function Blog(props: BlogProps) {
         </div>
       </div>
       <main className="container max-w-2xl mx-auto py-32 px-4 md:px-0">
-        {props.posts.map((post) => (
-          <div className="my-24">
+        {props.posts.map((post, index) => (
+          <div className="my-24" key={index}>
             <article className="max-h-post relative">
               <header>
                 <h2 className="text-3xl font-bold text-black hover:text-blue-600 transition duration-200 mb-2">
@@ -93,7 +93,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
     const body = dom.window.document.getElementsByTagName("body")[0];
 
     while (body.innerHTML.length > 1700) {
-      body.removeChild(body.lastChild);
+      const lastChild = body.children[body.children.length - 1];
+      if (lastChild.childNodes.length > 0) {
+        lastChild.removeChild(lastChild.lastChild);
+      } else {
+        body.removeChild(body.lastChild);
+      }
     }
 
     return { ...post, html: body.innerHTML };
