@@ -1,6 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from "next";
 import api from "config/clientConfig";
 import { PostOrPage, Settings } from "@tryghost/content-api";
+import { useRouter } from "next/router";
 
 import Navbar from "components/Navbar";
 import Footer from "components/Footer";
@@ -11,19 +12,23 @@ interface PostSlugProps {
 }
 
 export default function PostSlug(props: PostSlugProps) {
-  return (
-    <div>
-      <Navbar
-        settings={props.settings}
-        seo={{
-          title: props.post.title,
-          description: props.post.meta_description,
-        }}
-      />
-      <h1>{props.post.title}</h1>
-      <Footer settings={props.settings} />
-    </div>
-  );
+  const router = useRouter();
+  if (router.isFallback) {
+    return <h1>Loading...</h1>;
+  } else
+    return (
+      <div>
+        <Navbar
+          settings={props.settings}
+          seo={{
+            title: props.post.title,
+            description: props.post.meta_description,
+          }}
+        />
+        <h1>{props.post.title}</h1>
+        <Footer settings={props.settings} />
+      </div>
+    );
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
@@ -35,6 +40,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       post,
       settings,
     },
+    revalidate: 60,
   };
 };
 
