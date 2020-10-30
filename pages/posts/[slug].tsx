@@ -6,6 +6,9 @@ import { useRouter } from "next/router";
 import Navbar from "components/Navbar";
 import Footer from "components/Footer";
 
+import ReactHtmlParser from "react-html-parser";
+import Image from "next/image";
+
 interface PostSlugProps {
   post: PostOrPage;
   settings: Settings;
@@ -25,7 +28,32 @@ export default function PostSlug(props: PostSlugProps) {
             description: props.post.meta_description,
           }}
         />
-        <h1>{props.post.title}</h1>
+        <main className="container max-w-2xl mx-auto py-32 px-4 md:px-0">
+          <h1 className="font-extrabold text-4xl mb-2 leading-tight">
+            {props.post.title}
+          </h1>
+          <time
+            className="text-lg font-semibold text-gray-800"
+            dateTime={props.post.published_at}
+          >
+            {new Date(props.post.published_at).toLocaleString("en-US", {
+              weekday: "long",
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+            })}
+          </time>
+          <p className="text-gray-600">{props.post.reading_time} minutes</p>
+          <div className="ghost-content">
+            {ReactHtmlParser(props.post.html, {
+              transform(node) {
+                if (node.type === "tag" && node.name === "img") {
+                  return <Image unsized src={node.attribs.src} />;
+                }
+              },
+            })}
+          </div>
+        </main>
         <Footer settings={props.settings} />
       </div>
     );
