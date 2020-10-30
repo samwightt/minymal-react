@@ -2,6 +2,9 @@ import { GetStaticProps } from "next";
 import { PostsOrPages, Settings } from "@tryghost/content-api";
 import api from "config/clientConfig";
 import Image from "next/image";
+import Link from "next/link";
+
+import { JSDOM } from "jsdom";
 
 import ReactHtmlParser from "react-html-parser";
 
@@ -16,7 +19,14 @@ interface BlogProps {
 export default function Blog(props: BlogProps) {
   return (
     <div>
-      <Navbar settings={props.settings} />
+      <Navbar
+        settings={props.settings}
+        seo={{
+          title: "Blog",
+          description:
+            "The blog of Sam Wight, software engineer and CS student at The University of Alabama.",
+        }}
+      />
       <div className="py-32 gradient-header">
         <div className="container mx-auto max-w-md flex flex-col items-center">
           <h1 className="mt-8 text-2xl text-gray-900 uppercase font-extrabold font-open text-center">
@@ -33,7 +43,7 @@ export default function Blog(props: BlogProps) {
             <article className="max-h-post relative">
               <header>
                 <h2 className="text-3xl font-bold text-black hover:text-blue-600 transition duration-200 mb-2">
-                  {post.title}
+                  <Link href={`/posts/${post.slug}`}>{post.title}</Link>
                 </h2>
                 <time
                   className="font-semibold text-gray-800"
@@ -61,9 +71,11 @@ export default function Blog(props: BlogProps) {
               </section>
               <div className="fade-out">&nbsp;</div>
             </article>
-            <a className="font-semibold text-gray-700 border-b-2 pb-1 border-gray-500 hover:text-blue-600 hover:border-blue-700 transition duration-200 -mt-4">
-              Continue reading
-            </a>
+            <Link href={`/posts/${post.slug}`}>
+              <a className="font-semibold text-gray-700 border-b-2 pb-1 border-gray-500 hover:text-blue-600 hover:border-blue-700 transition duration-200 -mt-4">
+                Continue reading
+              </a>
+            </Link>
           </div>
         ))}
       </main>
@@ -76,9 +88,20 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const posts = await api.posts.browse({ page: 1, limit: 20 });
   const settings = await api.settings.browse();
 
+  const fixedPosts = posts.map((post) => {
+    const dom = new JSDOM(post.html);
+    const body = dom.window.document.getElementsByTagName("body")[0];
+
+    while (body.innerHTML.length > 1700) {
+      body.removeChild(body.lastChild);
+    }
+
+    return { ...post, html: body.innerHTML };
+  });
+
   return {
     props: {
-      posts,
+      posts: fixedPosts,
       settings,
     },
     revalidate: 60,

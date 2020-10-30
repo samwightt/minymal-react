@@ -17,7 +17,7 @@ interface HomeProps {
 export default function Home(props: HomeProps) {
   return (
     <div>
-      <Navbar settings={props.settings} />
+      <Navbar settings={props.settings} seo={{}} />
       <Header settings={props.settings} />
       <main>
         <div className="container max-w-2xl mx-auto py-32 px-4 md:px-0 ghost-content">
