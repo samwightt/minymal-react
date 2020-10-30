@@ -1,0 +1,124 @@
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+
+.gradient-header {
+  background: linear-gradient(
+    0deg,
+    rgba(240, 240, 240, 1) 0%,
+    rgba(255, 255, 255, 1) 55%
+  );
+}
+
+.ghost-content p,
+.ghost-content li {
+  @apply text-gray-700 font-normal leading-relaxed text-lg;
+}
+
+.ghost-content p {
+  @apply my-4;
+}
+
+.ghost-content strong {
+  @apply font-semibold text-gray-800;
+}
+
+.ghost-content em u s {
+  @apply text-gray-900;
+}
+
+.ghost-content a {
+  @apply border-b-2 border-gray-300 text-gray-600 transition duration-300;
+}
+
+.ghost-content a:hover {
+  @apply border-blue-600 text-blue-800;
+}
+
+.ghost-content blockquote {
+  @apply text-gray-800 border-l-4 border-blue-400 text-xl py-5 my-6 px-4 font-semibold leading-relaxed;
+}
+
+.ghost-content hr {
+  @apply max-w-lg w-full mx-auto my-12 border-2 border-gray-200;
+}
+
+.ghost-content h1,
+.ghost-content h1 > * {
+  @apply text-3xl font-extrabold text-gray-900 my-5;
+}
+
+.ghost-content h2,
+.ghost-content h2 > * {
+  @apply text-2xl font-extrabold text-gray-900 my-4;
+}
+
+.ghost-content h3,
+.ghost-content h3 > * {
+  @apply text-3/4xl font-bold text-gray-800 my-4;
+}
+
+.ghost-content h4,
+.ghost-content h4 > * {
+  @apply text-xl font-bold text-gray-800 my-4;
+}
+
+.ghost-content h5,
+.ghost-content h5 > * {
+  @apply text-1/4xl font-bold text-gray-700 my-3;
+}
+
+.ghost-content h6,
+.ghost-content h6 > * {
+  @apply my-3 text-lg font-bold text-gray-700;
+}
+
+.ghost-content ol {
+  @apply list-decimal;
+}
+
+.ghost-content ul {
+  @apply list-disc;
+}
+
+.ghost-content ul,
+.ghost-content ol {
+  @apply pl-5;
+}
+
+.ghost-content li {
+  @apply my-2;
+}
+
+.kg-width-wide {
+}
+.kg-width-full {
+}
+.kg-gallery-container {
+}
+.kg-gallery-row {
+}
+.kg-gallery-image {
+}
+.kg-bookmark-card {
+}
+.kg-bookmark-container {
+}
+.kg-bookmark-content {
+}
+.kg-bookmark-title {
+}
+.kg-bookmark-description {
+}
+.kg-bookmark-metadata {
+}
+.kg-bookmark-icon {
+}
+.kg-bookmark-author {
+}
+.kg-bookmark-publisher {
+}
+.kg-bookmark-thumbnail {
+}
