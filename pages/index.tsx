@@ -29,7 +29,6 @@ export default function Home(props: HomeProps) {
               }
             },
           })}
-          <div dangerouslySetInnerHTML={{ __html: props.page.html }}></div>
         </div>
       </main>
       <Footer settings={props.settings} />
@@ -46,5 +45,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
       page,
       settings,
     },
+    revalidate: 60,
   };
 };
